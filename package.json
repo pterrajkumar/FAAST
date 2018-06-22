@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "rajkumarpeter",
+  "author": "rajkumar peter",
   "license": "ISC",
   "dependencies": {
     "appdynamics": "^4.4.9",
@@ -14,5 +14,10 @@
     "ejs": "^2.6.1",
     "express": "^4.16.2",
     "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-zip": "^4.1.0",
+    "minimist": "^1.2.0"
   }
 }
