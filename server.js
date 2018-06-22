@@ -1,3 +1,13 @@
+require('appdynamics').profile({
+    controllerHostName: 'apmgctrl003.pwc.com',
+    controllerPort: 443,
+    controllerSslEnabled: true,  // Set to true if controllerPort is SSL
+    accountName: 'customer1',
+    accountAccessKey: 'ceeddede-c311-4d30-8466-2f2fa2c9f87b',
+    applicationName: 'Test_Poc_Azure',
+    tierName: 'choose_a_tier_name',
+    nodeName: 'choose_a_node_name'
+});
 
 const express = require("express");
 const path = require("path");
