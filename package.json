@@ -16,7 +16,7 @@
     "pg": "^7.4.3"
   },
   "devDependencies": {
-    "gulp": "^4.0.0",
+    "gulp": "^3.9.0",
     "gulp-zip": "^3.0.2",
     "minimist": "^1.2.0"
   }
