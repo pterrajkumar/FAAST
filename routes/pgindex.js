@@ -3,6 +3,8 @@ const router = express.Router();
 const pg = require('pg');
 const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://pwcadmin@azurepostgreappdynamics:Welcome12345@azurepostgreappdynamics.postgres.database.azure.com:5432/todo?ssl=false';
+let appInsights = require("applicationinsights");
+let client = appInsights.defaultClient;
 
 const config = {
   host: 'azurepostgreappdynamics.postgres.database.azure.com',
@@ -18,14 +20,15 @@ const config = {
 const pool = new pg.Pool(config);
 
 router.post('/todos', (req, res, next) => {
+  appInsights.defaultClient.trackNodeHttpRequest({request: req, response: res});
   const results = [];
-  console.log(req.body);
   // Grab data from http request
   const data = {text: req.body.text, complete: false};
   pool.connect(function (err, client, done) {
       // Handle connection errors
       if(err) {
         console.log(err);
+        client.trackException({exception: new Error("Exceptions at Post todos method")});
         return res.status(500).json({success: false, data: err});
       }
       // SQL Query > Insert Data
@@ -44,7 +47,7 @@ router.post('/todos', (req, res, next) => {
 });
 
 router.get("/todos", (req, res, next) => {
-  console.log("get todos");
+  appInsights.defaultClient.trackNodeHttpRequest({request: req, response: res});
   pool.connect(function (err, client, done) {
     // Handle connection errors
     if(err) {

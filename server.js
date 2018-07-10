@@ -1,4 +1,16 @@
-require('appdynamics').profile({
+
+const appInsights = require("applicationinsights");
+appInsights.setup("1e437300-413c-481c-a1f7-f7b9c4dfa392")
+.setAutoDependencyCorrelation(true)
+.setAutoCollectRequests(true)
+.setAutoCollectPerformance(true)
+.setAutoCollectExceptions(true)
+.setAutoCollectDependencies(true)
+.setAutoCollectConsole(true)
+.setUseDiskRetryCaching(true)
+.start();
+
+/* require('appdynamics').profile({
     controllerHostName: 'apmgctrl003.pwc.com',
     controllerPort: 443,
     controllerSslEnabled: true,  // Set to true if controllerPort is SSL
@@ -7,7 +19,20 @@ require('appdynamics').profile({
     applicationName: 'Test_Poc_Azure',
     tierName: 'choose_a_tier_name',
     nodeName: 'choose_a_node_name'
-});
+}); */
+
+/* require("appdynamics").profile({
+    controllerHostName: 'paid237.saas.appdynamics.com',
+    controllerPort: 443, 
+    
+    // If SSL, be sure to enable the next line
+    controllerSslEnabled: true,
+    accountName: 'pricewaterhousecoopersgloballicensingservicescorporation',
+    accountAccessKey: '5f7jelcb0y4v',
+    applicationName: 'NodeJSTest',
+    tierName: 'NodeJSTest',
+    nodeName: 'process' // The controller will automatically append the node name with a unique number
+}); */
 
 const express = require("express");
 const path = require("path");
@@ -44,6 +69,9 @@ app.use(function (req, res, next) {
 
 //Routes
 app.use("/api", router);
+let start = Date.now();
 app.listen(port, function(){
     console.log(`Running on http://${HOST}:${port}`);
+    let duration = Date.now() - start;
+	appInsights.defaultClient.trackMetric({name: "server startup time", value: duration});
 });
